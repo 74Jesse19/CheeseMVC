@@ -6,10 +6,7 @@ import org.launchcode.models.CheeseType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -66,6 +63,22 @@ public class CheeseController {
             CheeseData.remove(cheeseId);
         }
 
+        return "redirect:";
+    }
+
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId){
+        Cheese c = CheeseData.getById(cheeseId); //creates variable "c"
+        model.addAttribute("cheeses", c);
+        return "cheese/edit";
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(int cheeseId, String name, String description){
+
+        Cheese c = CheeseData.getById(cheeseId);
+        c.setName(name);
+        c.setDescription(description);
         return "redirect:";
     }
 
