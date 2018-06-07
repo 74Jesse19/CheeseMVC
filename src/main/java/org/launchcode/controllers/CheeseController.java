@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+
 import org.launchcode.models.Cheese;
 import org.launchcode.models.CheeseData;
 import org.launchcode.models.CheeseType;
@@ -9,7 +10,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
+
 
 /**
  * Created by LaunchCode
@@ -68,14 +69,19 @@ public class CheeseController {
 
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int cheeseId){
-        Cheese c = CheeseData.getById(cheeseId); //creates variable "c"
+        model.addAttribute(new Cheese());
+        model.addAttribute("cheeseTypes", CheeseType.values());
+        Cheese c = CheeseData.getById(cheeseId); //creates Cheese variable "c"
         model.addAttribute("cheeses", c);
         return "cheese/edit";
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description){
-
+    public String processEditForm(int cheeseId, String name, String description,@Valid Cheese aCheese,
+                                  Errors errors, Model model){
+        if (errors.hasErrors()) {
+            return "cheese/edit";
+        }
         Cheese c = CheeseData.getById(cheeseId);
         c.setName(name);
         c.setDescription(description);
