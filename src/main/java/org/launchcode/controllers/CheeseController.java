@@ -70,6 +70,7 @@ public class CheeseController {
     @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
     public String displayEditForm(Model model, @PathVariable int cheeseId){
         model.addAttribute(new Cheese());
+        model.addAttribute("title", "Edit Cheese");
         model.addAttribute("cheeseTypes", CheeseType.values());
         Cheese c = CheeseData.getById(cheeseId); //creates Cheese variable "c"
         model.addAttribute("cheeses", c);
@@ -77,14 +78,16 @@ public class CheeseController {
     }
 
     @RequestMapping(value = "edit", method = RequestMethod.POST)
-    public String processEditForm(int cheeseId, String name, String description,@Valid Cheese aCheese,
+    public String processEditForm(int cheeseId, String name, String description, @ModelAttribute @Valid Cheese cheese,
                                   Errors errors, Model model){
         if (errors.hasErrors()) {
+            model.addAttribute("title", "Edit Cheese");
             return "cheese/edit";
         }
         Cheese c = CheeseData.getById(cheeseId);
         c.setName(name);
         c.setDescription(description);
+        model.addAttribute("cheeses", c);
         return "redirect:";
     }
 
