@@ -21,7 +21,9 @@ public class Category {
     @Size(min=3, max=15)
     private String name;
 
+
     @OneToMany
+//    This below annotation tells Hibernate to use the category_id column of the cheese table to determine which cheese belong to a given category.
     @JoinColumn(name="category_id")
     private List<Cheese> cheeses = new ArrayList<>();
 
@@ -44,7 +46,9 @@ public class Category {
         this.name = name;
     }
 
-
+    public List<Cheese> getCheeses() {
+        return cheeses;
+    }
 
 
 }

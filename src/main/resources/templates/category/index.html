@@ -6,10 +6,13 @@
 
 <h1 th:text="${title}">Default Title</h1>
 
+<nav th:replace="fragments :: navigation"></nav>
+
 <ul th:each="category : ${categories}">
-    <li th:text="${category.getName}">Category</li>
+    <li th:text="${category.name}">Category</li>
 
 </ul>
 
+<a href="/category/add">Add Category</a>
 </body>
 </html>
