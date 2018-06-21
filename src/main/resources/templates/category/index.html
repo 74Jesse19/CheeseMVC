@@ -9,7 +9,8 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <ul th:each="category : ${categories}">
-    <li th:text="${category.name}">Category</li>
+    <a th:href="@{'/cheese/category'}">
+    <li th:text="${category.name}"> Category</li></a>
 
 </ul>
 
